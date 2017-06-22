@@ -12,7 +12,7 @@ let additionalPaths = [];
 module.exports = {
   additionalPaths: additionalPaths,
   port: defaultSettings.port,
-  debug: true,
+  debug: true,//开启loaders的debug模式
   devtool: 'eval',
   output: {
     path: path.join(__dirname, '/../dist/assets'),

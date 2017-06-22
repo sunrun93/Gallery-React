@@ -27,6 +27,27 @@ export default StyleSheet.create({
     'overflow': 'hidden',
     'backgroundColor': '#ddd'
   },
+  'image-sec img-figure': {
+    'width': [{ 'unit': 'px', 'value': 300 }],
+    'height': [{ 'unit': 'px', 'value': 340 }],
+    'margin': [{ 'unit': 'px', 'value': 0 }, { 'unit': 'px', 'value': 0 }, { 'unit': 'px', 'value': 0 }, { 'unit': 'px', 'value': 0 }],
+    'padding': [{ 'unit': 'px', 'value': 30 }, { 'unit': 'px', 'value': 30 }, { 'unit': 'px', 'value': 30 }, { 'unit': 'px', 'value': 30 }],
+    'boxSizing': 'border-box',
+    'backgroundColor': '#fff',
+    'position': 'absolute'
+  },
+  'image-sec img-figure img': {
+    'width': [{ 'unit': 'px', 'value': 240 }],
+    'height': [{ 'unit': 'px', 'value': 240 }]
+  },
+  'image-sec figcaption': {
+    'textAlign': 'center'
+  },
+  'image-sec img-title': {
+    'margin': [{ 'unit': 'px', 'value': 10 }, { 'unit': 'px', 'value': 0 }, { 'unit': 'px', 'value': 0 }, { 'unit': 'px', 'value': 0 }],
+    'color': '#a7a0a2',
+    'fontSize': [{ 'unit': 'px', 'value': 16 }]
+  },
   'controller-nav': {
     'position': 'absolute',
     'left': [{ 'unit': 'px', 'value': 0 }],

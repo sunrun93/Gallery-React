@@ -69,6 +69,19 @@ let ImgFigure = React.createClass({
   }
 })
 
+//控制组件
+var ControllerUnit = React.createClass({
+  handleClick:function(e){
+    e.stopPropagation();
+    e.preventDefault();
+    },
+  render:function(){
+    return(
+      <span className = "controller-unit" onClick={this.handleClick}></span>
+    );
+  }
+})
+
 var AppComponent = React.createClass({
   Constant: {//初始化各分区的取值都为0
     centerPos: {
@@ -266,7 +279,8 @@ var AppComponent = React.createClass({
     
       imgFigures.push(<ImgFigure key={index} data={value} ref={`imgFigure${index}`}
       arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)}/>);//通过arrange将图片的状态信息传递给imgsFigure
-    }.bind(this));//用箭头函数bind方法报错
+      controllerUnits.push(<ControllerUnit/>)
+  }.bind(this));//用箭头函数bind方法报错
 
     return (
       <section className="stage" ref="stage">

@@ -44,10 +44,12 @@ let ImgFigure = React.createClass({
     }
     //如果图片须安装角度值不为0，添加旋转角度
     if (this.props.arrange.rotate) {
-      ['-moz-', '-ms-', '-webkit-', ''].forEach(function (value) {
-        styleObj[value + 'transform'] = `rotate(${this.props.arrange.rotate}deg)`;
+      ['MozTransform', 'msTransform', 'WebkitTransform', 'transform'].forEach(function (value) {
+        styleObj[value] = `rotate(${this.props.arrange.rotate}deg)`;
       }.bind(this))
-
+    }
+    if(this.props.arrange.isCenter){
+        styleObj.zIndex = 11;
     }
 
     let imgFigureClassName = 'img-figure';
@@ -72,12 +74,27 @@ let ImgFigure = React.createClass({
 //控制组件
 var ControllerUnit = React.createClass({
   handleClick:function(e){
+    //如果点击的是当前居中态的按钮，则翻转图片，否则将对应的图片居中
+    if(this.props.arrange.isCenter){
+      this.props.inverse()
+    }else{
+      this.props.center()
+    }
     e.stopPropagation();
     e.preventDefault();
     },
   render:function(){
+    let controllerUnitClassName = 'controller-unit';
+    //如果对应的是居中的图片，显示控制按钮的居中态
+    if(this.props.arrange.isCenter){
+      controllerUnitClassName += ' is-center';
+      //如果同时对应的是翻转态，显示翻状态
+      if(this.props.arrange.isInverse){
+        controllerUnitClassName += ' is-inverse';
+      }
+  }
     return(
-      <span className = "controller-unit" onClick={this.handleClick}></span>
+      <span className = {controllerUnitClassName} onClick={this.handleClick}></span>
     );
   }
 })
@@ -134,7 +151,7 @@ var AppComponent = React.createClass({
 
     //用以存储上侧图片的状态信息
     imgsArrangeTopArr = [];
-    let topImgNum = Math.ceil(Math.random()*2);//取一个或者不取
+    let topImgNum = Math.floor(Math.random()*2);//取一个或者不取,Math.floor()向下取整
     let topImgSpliceIndex = 0;//上侧图片是数组中的哪一个，初始化为0
 
     let imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex,1);//中心图片的状态信息
@@ -182,6 +199,7 @@ var AppComponent = React.createClass({
           isCenter:false
       }
     }
+
     //把top元素插回到原来的数组中
     if(imgsArrangeTopArr &&imgsArrangeTopArr[0]){
       imgsArrangeArr.splice(topImgSpliceIndex,0,imgsArrangeTopArr[0]);
@@ -279,7 +297,8 @@ var AppComponent = React.createClass({
     
       imgFigures.push(<ImgFigure key={index} data={value} ref={`imgFigure${index}`}
       arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)}/>);//通过arrange将图片的状态信息传递给imgsFigure
-      controllerUnits.push(<ControllerUnit/>)
+      
+      controllerUnits.push(<ControllerUnit key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)}/>)
   }.bind(this));//用箭头函数bind方法报错
 
     return (
